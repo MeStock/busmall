@@ -8,8 +8,8 @@ main{
     font-size: 1.3em;
 }
 main > p {
-    margin-top: 2%;
-    margin-left: 10%;
+    margin-top: 5%;
+    margin-left: 5%;
 }
 main > div {
     overflow: hidden;
@@ -19,11 +19,8 @@ img {
     width: 280px;
     height: 280px;
     border: 1px solid black;
-    margin-left: 10%;
+    margin-left: 1%;
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
-main > ul:last-child {
-    text-align: center;
-}
