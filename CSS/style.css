@@ -4,25 +4,26 @@ h1 {
     text-align: center;
 }
 main{
-    overflow: hidden;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.3em;
 }
 main > p {
     margin-top: 2%;
-    margin-left: 9%;
+    margin-left: 10%;
+}
+main > div {
+    overflow: hidden;
 }
 img {
     float: left;
     width: 280px;
     height: 280px;
     border: 1px solid black;
-    margin-left: 9%;
+    margin-left: 10%;
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
 main > ul:last-child {
     text-align: center;
-    margin-top: 50px;
 }
