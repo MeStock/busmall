@@ -1,0 +1,28 @@
+h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3em;
+    text-align: center;
+}
+main{
+    overflow: hidden;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.3em;
+}
+main > p {
+    margin-top: 2%;
+    margin-left: 9%;
+}
+img {
+    float: left;
+    width: 280px;
+    height: 280px;
+    border: 1px solid black;
+    margin-left: 9%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+main > ul:last-child {
+    text-align: center;
+    margin-top: 50px;
+}

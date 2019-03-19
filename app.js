@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('TestTestTest');
-
 /*
 This program will survey most popular items by:
   1. Displaying 3 random items
@@ -96,7 +94,6 @@ function countClick(event) {
 function randomItem() {
   //Create random numbers
   var randomIndex = Math.floor(Math.random() * merchandiseArray.length);
-  
   //Use random numbers as indexies in merchandiseArray
   nextItem = merchandiseArray[randomIndex];
   nextItem.numTimesShown++; //track item being listed
@@ -124,9 +121,13 @@ function calcResults(){
   }
 }
 
+//Reference parent ul and child li to page
+var ul_element = document.getElementById('resultsList');
 function printResults(){
   for(var l = 0; l < resultsArray.length; l++){
-    console.log(`${merchandiseArray[l].itemName} was clicked ${merchandiseArray[l].numClicks} times and shown ${merchandiseArray[l].numTimesShown} times, which is ${resultsArray[l]}%`);
+    var next_li = document.createElement('li');
+    next_li.textContent = (`${merchandiseArray[l].itemName} was clicked ${merchandiseArray[l].numClicks} times and shown ${merchandiseArray[l].numTimesShown} times, which is ${resultsArray[l]}%`);
+    ul_element.appendChild(next_li);
   }
 }
 
