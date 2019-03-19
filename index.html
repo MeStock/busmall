@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BusMall</title>
 
-    <link href="../CSS/reset.css" rel="stylesheet">
-    <link href="../CSS/style.css" rel="stylesheet">
+    <link href="CSS/reset.css" rel="stylesheet">
+    <link href="CSS/canvas.css" rel="stylesheet">
+    <link href="CSS/style.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -15,19 +16,21 @@
     </header>
     <main>
         <h1>Welcome to BusMall</h1>
-        <p>Please select from the following images which item you need in your life: </p>
         <div>
+        <p>Please select from the following images which item you need in your life: </p>
             <ul id="merchandise">
-                <li><img id="leftItem" src="img/bag.jpg" alt="Bag"></li>
-                <li><img id="centerItem" src="img/banana.jpg" alt="Banana"></li>
-                <li><img id="rightItem" src="img/bathroom.jpg" alt="Bathroom"></li>
+                <li><img id="0" src="img/bag.jpg" alt="Bag"></li>
+                <li><img id="1" src="img/banana.jpg" alt="Banana"></li>
+                <li><img id="2" src="img/bathroom.jpg" alt="Bathroom"></li>
             </ul>
         </div>
-        <ul id="resultsList">
-            <li></li>
-        </ul>
+        <div>
+            <canvas id="resultsGraph" width="400" height="400"></canvas>
+        </div>
+
     </main>
     <footer></footer>
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="JS/app.js"></script>
 </body>
 </html>
