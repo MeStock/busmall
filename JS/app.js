@@ -1,16 +1,5 @@
 'use strict';
 
-/*
-This program will survey most popular items by:
-  1. Displaying 3 random items
-  2. Ask user to select which one they like
-  3. Count number of votes 
-  4. Count number of times each item is shown (regardless if its selected)
-  5. Show results in a percentage on a graph
-    --> #times selected/ #times shown * 100
-
-*/
-
 //Global Variables
 var numberOfImages = 3;
 var totalClicksCounter = 0;
@@ -57,7 +46,7 @@ function Merchandise(itemName, filepath){
 Event to listen for:
   -Click on an image
 
-This to track:
+Things to track:
     -track # of clicks
     -track # times shown
     -stop listening after 25 votes are counted
@@ -91,15 +80,22 @@ function countClick(event) {
 ==========================================
 Other Functions:
 
-1.getNewImages()
+1.firstImages()
+  select 3 random images and display them on the DOM
+2.getNewImages()
   displays images on the page
-2.randomItem()
+3.randomItem()
   creates a random number to select new item
   checks to make sure random number !== any of the 3 used for last images displayed
-3.calcResults()
+4.calcResults()
   calculates results as a % (#clicks/#times shown * 100)
   stores names of each item to be displayed on graph
-4.buildResultsGraph()
+  stores #clicks & #times shown to be displayed on another graph (TBD)
+5.removeImage();
+  removes images from the DOM after survey is complete
+6.takeOffTheListener()
+  removes listeners from DOM after survey is complete
+7.buildResultsGraph()
   renders results from above function onto a bar graph
 ==========================================
 */
@@ -127,11 +123,10 @@ function getNewImages(){
   tempIndexArray = [];
 }
 
-//This function will replace items with new (randomized) items
 function randomItem() {
   do {//Create random number
     randomIndex = Math.floor(Math.random() * merchandiseArray.length);
-    //while new index equals previously used index
+    //while new index equals previously used index or equals an index just produced
   }while(previousIndexArray.includes(randomIndex) || tempIndexArray.includes(randomIndex)); 
   
   //Use random numbers as indexies in merchandiseArray
@@ -149,11 +144,11 @@ function calcResults(){
       results = Math.floor((merchandiseArray[l].numClicks / merchandiseArray[l].numTimesShown) * 100);
       resultsArray.push(results);
     }
-    //if # times shown equals 0 push 0 to the array
+    //if # times shown equals 0, push 0 into the array
     resultsArray.push(0);
 
     //collect all information to display on graph
-    merchandiseItemNameArray.push(merchandiseArray[l].itemName); //item names
+    merchandiseItemNameArray.push(merchandiseArray[l].itemName);
     numClicksArray.push(merchandiseArray[l].numClicks);
     numTimesShownArray.push(merchandiseArray[l].numTimesShown);
   }
@@ -162,6 +157,12 @@ function calcResults(){
 function removeImage(){
   for(var x = 0; x < currentDisplayArray.length; x++){
     var img_element = document.getElementById(x).style.visibility= "hidden";
+  }
+}
+
+function takeOffEventListener() {
+  for(var k = 0; k < currentDisplayArray.length; k++){
+    currentDisplayArray[k].removeEventListener('click', countClick);
   }
 }
 
@@ -221,16 +222,11 @@ new Merchandise('Wine-glass', './img/wine-glass.jpg');
 
 firstImages();
 
-//Create the listener
+//Now that 1st images are selected, create the listener
 for(var j = 0; j < currentDisplayArray.length; j++){
   currentDisplayArray[j].addEventListener('click', countClick);
 }
 
-//This function will remove the event listener
-function takeOffEventListener() {
-  for(var k = 0; k < currentDisplayArray.length; k++){
-    currentDisplayArray[k].removeEventListener('click', countClick);
-  }
-}
+
 
 
