@@ -19,16 +19,14 @@ var nextItem;
 var results;
 var resultsArray = [];
 var merchandiseItemNameArray = [];
+var numClicksArray = [];
+var numTimesShownArray = [];
 var randomIndex;
 var previousIndexArray = [];
 var tempIndexArray =[];
 
 //Reference the DOM
-var currentDisplayArray = [
-  // document.getElementById('0'),
-  // document.getElementById('1'),
-  // document.getElementById('2')
-];
+var currentDisplayArray = [];
 
 /*
 ==========================================
@@ -153,8 +151,11 @@ function calcResults(){
     }
     //if # times shown equals 0 push 0 to the array
     resultsArray.push(0);
-    //collect all the item names to display on graph
-    merchandiseItemNameArray.push(merchandiseArray[l].itemName);
+
+    //collect all information to display on graph
+    merchandiseItemNameArray.push(merchandiseArray[l].itemName); //item names
+    numClicksArray.push(merchandiseArray[l].numClicks);
+    numTimesShownArray.push(merchandiseArray[l].numTimesShown);
   }
 }
 
@@ -173,7 +174,7 @@ function buildResultsGraph(){
       labels: merchandiseItemNameArray,
       datasets: [{
         label: 'Percentage selected (#clicks/#times shown)',
-        backgroundColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgb(254, 127, 156)',
         borderColor: 'rgb(255, 99, 132)',
         data: resultsArray
       }]
