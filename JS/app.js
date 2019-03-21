@@ -105,11 +105,11 @@ Other Functions:
 */
 
 function firstImages() {
-  for(var k = 0; k < numberOfImages; k++) {
+  for(var j = 0; j < numberOfImages; j++) {
     //create references
-    currentDisplayArray.push(document.getElementById(k));
+    currentDisplayArray.push(document.getElementById(j));
     //add event listeners
-    currentDisplayArray[k].addEventListener('click', countClick);
+    currentDisplayArray[j].addEventListener('click', countClick);
   }
   getNewImages();
 }
@@ -157,9 +157,8 @@ function calcResults(){
 }
 
 function removeImage(){
-  for(var x = 0; x < currentDisplayArray.length; x++){
-    var img_element = document.getElementById(x).style.visibility= "hidden";
-  }
+  var img_element = document.getElementById('merchandise');
+  img_element.remove(img_element.selectedIndex);
 }
 
 function takeOffEventListener() {
@@ -216,17 +215,13 @@ function buildResultsGraph(){
   });
 }
 
-
-
-
-
 /*
 ==========================================
 Initialize Page
 ==========================================
 */
+
 if(localStorage.getItem('merchandiseSurveyResults') === null){
-  console.log('get all merchandise');
   new Merchandise('Bag', './img/bag.jpg');
   new Merchandise('Banana', './img/banana.jpg');
   new Merchandise('Bathroom', './img/bathroom.jpg');
