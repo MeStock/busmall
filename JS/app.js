@@ -67,12 +67,16 @@ function countClick(event) {
 
   getNewImages();
 
-  //stop survey after 25 clicks & calculate the results
+  //stop survey after 25 clicks
+  //then calculate the results, remove the images, build a graph with results, & turn off listeners
   if(totalClicksCounter > 24){
     calcResults();
     removeImage();
     buildResultsGraph();
     takeOffEventListener();
+
+    var stringifyMerchandise = JSON.stringify(merchandiseArray);
+    localStorage.setItem('merchandiseSurveyResults', stringifyMerchandise);
   }
 }
 
@@ -101,20 +105,18 @@ Other Functions:
 */
 
 function firstImages() {
-  for(var k = 0; k < numberOfImages; k++) {
-    currentDisplayArray.push(document.getElementById(k));
-    do{
-      var index = Math.floor(Math.random() * merchandiseArray.length);
-    }while(tempIndexArray.includes(index));
-    tempIndexArray.push(index);
-    currentDisplayArray[k].src = merchandiseArray[index].filepath;
-    currentDisplayArray[k].alt = merchandiseArray[index].itemName;
+  for(var j = 0; j < numberOfImages; j++) {
+    //create references
+    currentDisplayArray.push(document.getElementById(j));
+    //add event listeners
+    currentDisplayArray[j].addEventListener('click', countClick);
   }
+  getNewImages();
 }
 
 function getNewImages(){
   //This loop will change the display after the user makes a selection
-  for(var k = 0; k < currentDisplayArray.length; k++){
+  for(var k = 0; k < numberOfImages; k++){
     nextItem = randomItem();
     currentDisplayArray[k].src = nextItem.filepath;
     currentDisplayArray[k].alt = nextItem.itemName;
@@ -140,13 +142,13 @@ function randomItem() {
 function calcResults(){
   for(var l = 0; l < merchandiseArray.length; l++){
     //if # times shown does not equal 0 calc % (denominator that equals 0 will return NaN)
-    if(merchandiseArray[l].numTimesShown !== 0){
-      results = Math.floor((merchandiseArray[l].numClicks / merchandiseArray[l].numTimesShown) * 100);
-      resultsArray.push(results);
+    if(merchandiseArray[l].numTimesShown === 0){
+      //if # times shown equals 0, push 0 into the array
+      resultsArray.push(0);
     }
-    //if # times shown equals 0, push 0 into the array
-    resultsArray.push(0);
-
+    results = Math.floor((merchandiseArray[l].numClicks / merchandiseArray[l].numTimesShown) * 100);
+    resultsArray.push(results);
+    
     //collect all information to display on graph
     merchandiseItemNameArray.push(merchandiseArray[l].itemName);
     numClicksArray.push(merchandiseArray[l].numClicks);
@@ -155,9 +157,8 @@ function calcResults(){
 }
 
 function removeImage(){
-  for(var x = 0; x < currentDisplayArray.length; x++){
-    var img_element = document.getElementById(x).style.visibility= "hidden";
-  }
+  var img_element = document.getElementById('merchandise');
+  img_element.remove(img_element.selectedIndex);
 }
 
 function takeOffEventListener() {
@@ -174,8 +175,29 @@ function buildResultsGraph(){
     data: {
       labels: merchandiseItemNameArray,
       datasets: [{
-        label: 'Percentage selected (#clicks/#times shown)',
-        backgroundColor: 'rgb(254, 127, 156)',
+        label: 'Percentage of times an item was selected when shown',
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
         borderColor: 'rgb(255, 99, 132)',
         data: resultsArray
       }]
@@ -199,33 +221,34 @@ Initialize Page
 ==========================================
 */
 
-new Merchandise('Bag', './img/bag.jpg');
-new Merchandise('Banana', './img/banana.jpg');
-new Merchandise('Bathroom', './img/bathroom.jpg');
-new Merchandise('Boots', './img/boots.jpg');
-new Merchandise('Breakfast', './img/breakfast.jpg');
-new Merchandise('Bubblegum', './img/bubblegum.jpg');
-new Merchandise('Chair', './img/chair.jpg');
-new Merchandise('Cthulhu', './img/cthulhu.jpg');
-new Merchandise('Dog-duck', './img/dog-duck.jpg');
-new Merchandise('Dragon', './img/dragon.jpg');
-new Merchandise('Pen', './img/pen.jpg');
-new Merchandise('Pet-Sweep', './img/pet-sweep.jpg');
-new Merchandise('Scissors', './img/scissors.jpg');
-new Merchandise('Shark', './img/shark.jpg');
-new Merchandise('Sweep', './img/sweep.png');
-new Merchandise('Tauntaun', './img/tauntaun.jpg');
-new Merchandise('Unicorn', './img/unicorn.jpg');
-new Merchandise('Usb', './img/usb.gif');
-new Merchandise('Water-can', './img/water-can.jpg');
-new Merchandise('Wine-glass', './img/wine-glass.jpg');
+if(localStorage.getItem('merchandiseSurveyResults') === null){
+  new Merchandise('Bag', './img/bag.jpg');
+  new Merchandise('Banana', './img/banana.jpg');
+  new Merchandise('Bathroom', './img/bathroom.jpg');
+  new Merchandise('Boots', './img/boots.jpg');
+  new Merchandise('Breakfast', './img/breakfast.jpg');
+  new Merchandise('Bubblegum', './img/bubblegum.jpg');
+  new Merchandise('Chair', './img/chair.jpg');
+  new Merchandise('Cthulhu', './img/cthulhu.jpg');
+  new Merchandise('Dog-duck', './img/dog-duck.jpg');
+  new Merchandise('Dragon', './img/dragon.jpg');
+  new Merchandise('Pen', './img/pen.jpg');
+  new Merchandise('Pet-Sweep', './img/pet-sweep.jpg');
+  new Merchandise('Scissors', './img/scissors.jpg');
+  new Merchandise('Shark', './img/shark.jpg');
+  new Merchandise('Sweep', './img/sweep.png');
+  new Merchandise('Tauntaun', './img/tauntaun.jpg');
+  new Merchandise('Unicorn', './img/unicorn.jpg');
+  new Merchandise('Usb', './img/usb.gif');
+  new Merchandise('Water-can', './img/water-can.jpg');
+  new Merchandise('Wine-glass', './img/wine-glass.jpg');
+
+}else{
+  var stringifyMerchandise = localStorage.getItem('merchandiseSurveyResults');
+  merchandiseArray = JSON.parse(stringifyMerchandise);
+}
 
 firstImages();
-
-//Now that 1st images are selected, create the listener
-for(var j = 0; j < currentDisplayArray.length; j++){
-  currentDisplayArray[j].addEventListener('click', countClick);
-}
 
 
 
